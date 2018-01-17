@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">smstoss</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_save">Save</string>
+    <string name="back">Back</string>
+
+    <string name="error_no_title">Title is Empty!!</string>
+    <string name="error_no_receive_number">Receive Number is Empty!!</string>
+    <string name="error_no_send_number">Send Number is Empty!!</string>
+
+    <string name="title">Title</string>
+    <string name="receive_number">Receive Number</string>
+    <string name="send_number">Send Number</string>
+</resources>
