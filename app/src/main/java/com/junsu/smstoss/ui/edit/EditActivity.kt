@@ -79,7 +79,7 @@ class EditActivity : AppCompatActivity(), TextView.OnEditorActionListener {
         }
     }
 
-    fun save(): Boolean {
+    private fun save(): Boolean {
         var ret = false
         if(TextUtils.isEmpty(inputTitle.text)){
             Snackbar.make(viewEditLayout, R.string.error_no_title, Snackbar.LENGTH_SHORT).show()

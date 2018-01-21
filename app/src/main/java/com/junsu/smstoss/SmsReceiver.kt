@@ -13,7 +13,7 @@ import com.junsu.smstoss.util.SmsUtil
 
 class SmsReceiver : BroadcastReceiver() {
     companion object {
-        val TAG = "SmsReceiver"
+        const val TAG = "SmsReceiver"
     }
 
     override fun onReceive(context: Context, intent: Intent) {
@@ -37,7 +37,7 @@ class SmsReceiver : BroadcastReceiver() {
         Log.v(TAG, "handleSmsReceived address: " + receiveNumber + " body: " + body)
 
         val items = ItemDatabase.get(context).itemDao().findNumber(receiveNumber)
-        if(items.size>0){
+        if(items.isNotEmpty()){
             for(item in items){
                 Log.d(TAG, item.toString());
                 if(item.enabled) {

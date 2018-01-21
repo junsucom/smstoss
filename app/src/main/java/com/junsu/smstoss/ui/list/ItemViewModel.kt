@@ -7,9 +7,6 @@ import com.junsu.smstoss.persistence.Item
 import com.junsu.smstoss.persistence.ItemDatabase
 import com.junsu.smstoss.util.ioThread
 
-/**
- * A simple ViewModel that provides a paged list of delicious Cheeses.
- */
 class ItemViewModel(app: Application) : AndroidViewModel(app) {
     val dao = ItemDatabase.get(app).itemDao()
 
@@ -33,7 +30,6 @@ class ItemViewModel(app: Application) : AndroidViewModel(app) {
 
     companion object {
         private const val PAGE_SIZE = 30
-
         private const val ENABLE_PLACEHOLDERS = true
     }
 }

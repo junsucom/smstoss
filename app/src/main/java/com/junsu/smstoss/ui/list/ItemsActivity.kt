@@ -16,14 +16,17 @@ import android.widget.CompoundButton
 import com.junsu.smstoss.R
 import com.junsu.smstoss.persistence.Item
 import com.junsu.smstoss.ui.edit.EditActivity
+import com.junsu.smstoss.util.PermissionUtil
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
+import java.security.Permission
 import java.util.*
 
 
 class ItemsActivity : AppCompatActivity() {
     companion object {
         val TAG = "ItemsActivity"
+        private val PERMISSIONS = arrayOf(permission.SEND_SMS, permission.RECEIVE_SMS)
         val PERMISSIONS_REQUEST: Int = 100;
     }
 
@@ -56,7 +59,7 @@ class ItemsActivity : AppCompatActivity() {
             startActivity(Intent(applicationContext, EditActivity::class.java))
         }
 
-        requestPermitions()
+        PermissionUtil.requestPermition(this, PERMISSIONS, PERMISSIONS_REQUEST);
         initList()
         initSwipeToDelete()
     }
@@ -91,25 +94,6 @@ class ItemsActivity : AppCompatActivity() {
             PERMISSIONS_REQUEST -> {
                 Log.d(TAG, "Get permissions!"+ Arrays.toString(permissions))
             }
-        }
-    }
-
-    private val DANGEROUS_PERMISSIONS = arrayOf(permission.SEND_SMS, permission.RECEIVE_SMS)
-
-    private fun requestPermitions() {
-        val missingPermissions = ArrayList<String>()
-        for (permission in DANGEROUS_PERMISSIONS) {
-            if (ActivityCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
-                missingPermissions.add(permission)
-            }
-        }
-
-        if (missingPermissions.size > 0) {
-            val permissions = arrayOfNulls<String>(missingPermissions.size)
-            ActivityCompat.requestPermissions(
-                    this,
-                    missingPermissions.toTypedArray(),
-                    PERMISSIONS_REQUEST)
         }
     }
 }
