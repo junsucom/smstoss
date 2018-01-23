@@ -7,16 +7,20 @@ import android.view.ViewGroup
 import android.widget.CompoundButton
 import com.junsu.smstoss.persistence.Item
 
-class ItemsAdapter constructor(private val clickListener: View.OnClickListener, private val toggleListener: CompoundButton.OnCheckedChangeListener) : PagedListAdapter<Item, ItemViewHolder>(diffCallback) {
+class ItemsAdapter constructor(private val clickListener: View.OnClickListener,
+                               private val toggleListener: CompoundButton.OnCheckedChangeListener) : PagedListAdapter<Item, ItemViewHolder>(diffCallback) {
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         holder.bindTo(getItem(position))
         val item = getItem(position)
+
+        //아이템 클릭 리스너
         with(holder.itemView) {
             tag = item
             setOnClickListener(clickListener)
         }
 
+        //switch 버튼 리스너
         with(holder.switchView) {
             tag = item
             setOnCheckedChangeListener(toggleListener)
@@ -34,7 +38,7 @@ class ItemsAdapter constructor(private val clickListener: View.OnClickListener, 
 
             override fun areContentsTheSame(oldItem: Item, newItem: Item): Boolean =
                     oldItem.id == newItem.id
-                            && oldItem.itemTitle.equals(newItem.itemTitle)
+                            && oldItem.title.equals(newItem.title)
                             && oldItem.receiveNumber.equals(newItem.receiveNumber)
                             && oldItem.sendNumber.equals(newItem.id)
         }

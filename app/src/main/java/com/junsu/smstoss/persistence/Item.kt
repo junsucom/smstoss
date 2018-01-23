@@ -9,11 +9,11 @@ import java.util.*
 data class Item(@PrimaryKey(autoGenerate = true)
                 @ColumnInfo(name = "id")
                 val id: Long = 0,
-                @ColumnInfo(name = "itemtitle")
-                val itemTitle: String,
-                @ColumnInfo(name = "receivenumber")
+                @ColumnInfo(name = "title")
+                val title: String,
+                @ColumnInfo(name = "receiverNumber")
                 val receiveNumber: String,
-                @ColumnInfo(name = "sendnumber")
+                @ColumnInfo(name = "sendNumber")
                 val sendNumber: String,
                 @ColumnInfo(name = "enabled")
                 val enabled: Boolean = true,

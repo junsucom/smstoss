@@ -19,8 +19,8 @@ import kotlinx.android.synthetic.main.activity_edit.*
 class EditActivity : AppCompatActivity(), TextView.OnEditorActionListener {
 
     companion object {
-        val TAG = "EditActivity"
-        val PARAM_SELECTED_ITEM_ID = "param_selected_item_id"
+        private const val TAG = "EditActivity"
+        const val PARAM_SELECTED_ITEM_ID = "param_selected_item_id"
     }
 
     private var selectedItemId = 0L
@@ -40,7 +40,7 @@ class EditActivity : AppCompatActivity(), TextView.OnEditorActionListener {
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({
-                        inputTitle.setText(it.itemTitle)
+                        inputTitle.setText(it.title)
                         inputReceiveNumber.setText(it.receiveNumber)
                         inputSendNumber.setText(it.sendNumber)
                     })
@@ -81,6 +81,7 @@ class EditActivity : AppCompatActivity(), TextView.OnEditorActionListener {
 
     private fun save(): Boolean {
         var ret = false
+
         if(TextUtils.isEmpty(inputTitle.text)){
             Snackbar.make(viewEditLayout, R.string.error_no_title, Snackbar.LENGTH_SHORT).show()
             inputTitle.requestFocus()

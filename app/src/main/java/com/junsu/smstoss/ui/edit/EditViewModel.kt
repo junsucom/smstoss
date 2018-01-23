@@ -15,11 +15,11 @@ class EditViewModel(app: Application) : AndroidViewModel(app) {
     fun read(id:Long) = dao.getItemById(id)
 
     fun insert(title: CharSequence, rn: CharSequence, sn: CharSequence) = ioThread {
-        dao.insertItem(Item(itemTitle = title.toString(), receiveNumber = rn.toString(), sendNumber = sn.toString()))
+        dao.insertItem(Item(title = title.toString(), receiveNumber = rn.toString(), sendNumber = sn.toString()))
     }
 
     fun modify(id:Long, title: CharSequence, rn: CharSequence, sn: CharSequence) = ioThread {
-        dao.insertItem(Item(id = id, itemTitle = title.toString(), receiveNumber = rn.toString(), sendNumber = sn.toString()))
+        dao.insertItem(Item(id = id, title = title.toString(), receiveNumber = rn.toString(), sendNumber = sn.toString()))
     }
 
     companion object {

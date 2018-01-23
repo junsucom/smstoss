@@ -1,59 +1,54 @@
-<android.support.design.widget.CoordinatorLayout
+<LinearLayout
+    android:id="@+id/viewEditLayout"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/viewEditLayout"
+    android:orientation="vertical"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
+    android:paddingTop="60dp"
     tools:context="com.junsu.smstoss.ui.edit.EditActivity">
 
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="?attr/actionBarSize"
-        android:orientation="vertical"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp"
-        android:paddingTop="60dp">
 
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/input_layout_title"
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/input_layout_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/inputTitle"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:hint="@string/title"
+            android:singleLine="true"/>
+    </android.support.design.widget.TextInputLayout>
 
-            <EditText
-                android:id="@+id/inputTitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/title"
-                android:singleLine="true"/>
-        </android.support.design.widget.TextInputLayout>
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/input_layout_receive_number"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/input_layout_receive_number"
+        <EditText
+            android:id="@+id/inputReceiveNumber"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:hint="@string/receive_number"
+            android:singleLine="true"/>
+    </android.support.design.widget.TextInputLayout>
 
-            <EditText
-                android:id="@+id/inputReceiveNumber"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/receive_number"
-                android:singleLine="true"/>
-        </android.support.design.widget.TextInputLayout>
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/input_layout_send_number"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/input_layout_send_number"
+        <EditText
+            android:id="@+id/inputSendNumber"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:hint="@string/send_number"
+            android:singleLine="true"/>
+    </android.support.design.widget.TextInputLayout>
+</LinearLayout>
 
-            <EditText
-                android:id="@+id/inputSendNumber"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/send_number"
-                android:singleLine="true"/>
-        </android.support.design.widget.TextInputLayout>
-    </LinearLayout>
-
-</android.support.design.widget.CoordinatorLayout>

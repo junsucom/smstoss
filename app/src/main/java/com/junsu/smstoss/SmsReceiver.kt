@@ -10,6 +10,8 @@ import android.util.Log
 import android.widget.Toast
 import com.junsu.smstoss.persistence.ItemDatabase
 import com.junsu.smstoss.util.SmsUtil
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 
 class SmsReceiver : BroadcastReceiver() {
     companion object {
@@ -23,7 +25,7 @@ class SmsReceiver : BroadcastReceiver() {
                 handleSmsReceived(context, intent)
             }
             SmsUtil.ACTION_SENT -> {
-                handleSmsSent(context, intent)
+                handleSmsSent(context)
             }
         }
     }
@@ -36,27 +38,19 @@ class SmsReceiver : BroadcastReceiver() {
         var body = sms.getMessageBody()
         Log.v(TAG, "handleSmsReceived address: " + receiveNumber + " body: " + body)
 
-        val items = ItemDatabase.get(context).itemDao().findNumber(receiveNumber)
-        if(items.isNotEmpty()){
-            for(item in items){
-                Log.d(TAG, item.toString());
-                if(item.enabled) {
-                    SmsUtil.sendSMS(context, receiveNumber, item.sendNumber, body)
-                }
-            }
-        }
-
-//        var settings: MutableMap<String, ItemData> = ItemData.load(context)
-//        Log.d("test", "settings.size:"+settings.size);
-//        if (settings.containsKey(receiveNumber)) {
-//
-//            var data: ItemData = settings.get(receiveNumber)!!
-//            Log.d("test", receiveNumber+" "+data.sendNumber);
-//            SmsUtil.sendSMS(context, receiveNumber, data.sendNumber, body)
-//        }
+        ItemDatabase.get(context).itemDao().findNumber(receiveNumber).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    for (item in it) {
+                        Log.d(TAG, item.toString());
+                        if (item.enabled) {
+                            SmsUtil.sendSMS(context, receiveNumber, item.sendNumber, body)
+                        }
+                    }
+                })
     }
 
-    private fun handleSmsSent(context: Context, intent: Intent) {
+    private fun handleSmsSent(context: Context) {
         when (resultCode) {
             Activity.RESULT_OK ->
                 // 전송 성공

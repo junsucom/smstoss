@@ -18,7 +18,7 @@ class ItemViewHolder(parent :ViewGroup) : RecyclerView.ViewHolder(
 
     fun bindTo(item: Item?) {
         this.item = item
-        titleView.text = item?.itemTitle
+        titleView.text = item?.title
         receiverView.text = item?.receiveNumber
         senderView.text = item?.sendNumber
         switchView.isChecked = item?.enabled!!

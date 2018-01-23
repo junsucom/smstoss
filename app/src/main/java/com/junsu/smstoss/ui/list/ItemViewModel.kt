@@ -2,7 +2,7 @@ package com.junsu.smstoss.ui.list
 
 import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
-import android.arch.paging.PagedList
+import android.arch.paging.LivePagedListBuilder
 import com.junsu.smstoss.persistence.Item
 import com.junsu.smstoss.persistence.ItemDatabase
 import com.junsu.smstoss.util.ioThread
@@ -10,14 +10,11 @@ import com.junsu.smstoss.util.ioThread
 class ItemViewModel(app: Application) : AndroidViewModel(app) {
     val dao = ItemDatabase.get(app).itemDao()
 
-    val allItems = dao.allItems().create(0,
-            PagedList.Config.Builder()
-                    .setPageSize(PAGE_SIZE)
-                    .setEnablePlaceholders(ENABLE_PLACEHOLDERS)
-                    .build())!!
+    val allItems = LivePagedListBuilder<Int, Item>(
+            dao.allItems(), /* page size */ PAGE_SIZE).build();
 
     fun insert(title: CharSequence, rn: CharSequence, sn: CharSequence) = ioThread {
-        dao.insertItem(Item(itemTitle = title.toString(), receiveNumber = rn.toString(), sendNumber = sn.toString()))
+        dao.insertItem(Item(title = title.toString(), receiveNumber = rn.toString(), sendNumber = sn.toString()))
     }
 
     fun remove(item: Item) = ioThread {
@@ -29,7 +26,6 @@ class ItemViewModel(app: Application) : AndroidViewModel(app) {
     }
 
     companion object {
-        private const val PAGE_SIZE = 30
-        private const val ENABLE_PLACEHOLDERS = true
+        private const val PAGE_SIZE = 20
     }
 }

@@ -4,10 +4,9 @@ import android.Manifest.permission
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.os.Bundle
-import android.support.v4.app.ActivityCompat
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
 import android.util.Log
@@ -19,17 +18,18 @@ import com.junsu.smstoss.ui.edit.EditActivity
 import com.junsu.smstoss.util.PermissionUtil
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
-import java.security.Permission
 import java.util.*
+
+
 
 
 class ItemsActivity : AppCompatActivity() {
     companion object {
-        val TAG = "ItemsActivity"
+        const val TAG = "ItemsActivity"
+        const val PERMISSIONS_REQUEST: Int = 100;
         private val PERMISSIONS = arrayOf(permission.SEND_SMS, permission.RECEIVE_SMS)
-        val PERMISSIONS_REQUEST: Int = 100;
-    }
 
+    }
 
     private val viewModel by lazy {
         ViewModelProviders.of(this).get(ItemViewModel::class.java)
@@ -55,11 +55,11 @@ class ItemsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
-        fabAdd.setOnClickListener { view ->
+        fabAdd.setOnClickListener {
             startActivity(Intent(applicationContext, EditActivity::class.java))
         }
 
-        PermissionUtil.requestPermition(this, PERMISSIONS, PERMISSIONS_REQUEST);
+        PermissionUtil.requestPermission(this, PERMISSIONS, PERMISSIONS_REQUEST);
         initList()
         initSwipeToDelete()
     }
@@ -67,6 +67,7 @@ class ItemsActivity : AppCompatActivity() {
     private fun initList() {
         viewModel.allItems.observe(this, Observer(adapter::setList))
         itemList.adapter = adapter
+        itemList.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
     }
 
     /**
