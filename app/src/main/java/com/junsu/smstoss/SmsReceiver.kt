@@ -10,8 +10,7 @@ import android.util.Log
 import android.widget.Toast
 import com.junsu.smstoss.persistence.ItemDatabase
 import com.junsu.smstoss.util.SmsUtil
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
+import io.reactivex.Flowable
 
 class SmsReceiver : BroadcastReceiver() {
     companion object {
@@ -34,19 +33,16 @@ class SmsReceiver : BroadcastReceiver() {
         val msgs = Telephony.Sms.Intents.getMessagesFromIntent(intent)
 
         val sms = msgs[0]
-        var receiveNumber = sms.getOriginatingAddress()
-        var body = sms.getMessageBody()
+        val receiveNumber = sms.getOriginatingAddress()
+        val body = sms.getMessageBody()
         Log.v(TAG, "handleSmsReceived address: " + receiveNumber + " body: " + body)
 
-        ItemDatabase.get(context).itemDao().findNumber(receiveNumber).subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+        ItemDatabase.get(context).itemDao().findNumber(receiveNumber)
+                .flatMap({ Flowable.fromIterable(it) })
+                .filter({ it.enabled })
                 .subscribe({
-                    for (item in it) {
-                        Log.d(TAG, item.toString());
-                        if (item.enabled) {
-                            SmsUtil.sendSMS(context, receiveNumber, item.sendNumber, body)
-                        }
-                    }
+                    Log.d(TAG, it.toString());
+                    SmsUtil.sendSMS(context, receiveNumber, it.sendNumber, body)
                 })
     }
 

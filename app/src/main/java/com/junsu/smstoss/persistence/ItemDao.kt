@@ -28,9 +28,9 @@ interface ItemDao {
     @Query("SELECT * FROM items WHERE receiverNumber = :receiverNumber")
     fun findNumber(receiverNumber: String): Flowable<List<Item>>
 
-    @Query("SELECT * FROM items")
-    fun findAll(): List<Item>
+//    @Query("SELECT * FROM items")
+//    fun findAll(): List<Item>
 
-    @Query("DELETE FROM items")
-    fun deleteAllItems()
+//    @Query("DELETE FROM items")
+//    fun deleteAllItems()
 }
