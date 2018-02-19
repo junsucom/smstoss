@@ -21,19 +21,17 @@ import kotlinx.android.synthetic.main.content_main.*
 import java.util.*
 
 
-
-
 class ItemsActivity : AppCompatActivity() {
     companion object {
         const val TAG = "ItemsActivity"
         const val PERMISSIONS_REQUEST: Int = 100;
-        private val PERMISSIONS = arrayOf(permission.SEND_SMS, permission.RECEIVE_SMS)
-
+        private val PERMISSIONS = arrayOf(permission.SEND_SMS, permission.RECEIVE_SMS, permission.READ_PHONE_STATE)
     }
 
     private val viewModel by lazy {
         ViewModelProviders.of(this).get(ItemViewModel::class.java)
     }
+
     private val adapter by lazy {
         ItemsAdapter(View.OnClickListener {
             if (it.tag is Item) {
