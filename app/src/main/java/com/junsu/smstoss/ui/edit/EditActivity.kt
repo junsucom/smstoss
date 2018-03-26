@@ -1,6 +1,7 @@
 package com.junsu.smstoss.ui.edit
 
 import android.arch.lifecycle.ViewModelProviders
+import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
@@ -11,6 +12,7 @@ import android.view.MenuItem
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView
 import com.junsu.smstoss.R
+import com.junsu.smstoss.databinding.ActivityEditBinding
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_edit.*
@@ -30,7 +32,8 @@ class EditActivity : AppCompatActivity(), TextView.OnEditorActionListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_edit)
+        val binding: ActivityEditBinding =
+                DataBindingUtil.setContentView(this, R.layout.activity_edit)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         if (intent.hasExtra(PARAM_SELECTED_ITEM_ID)) {
@@ -40,9 +43,10 @@ class EditActivity : AppCompatActivity(), TextView.OnEditorActionListener {
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({
-                        inputTitle.setText(it.title)
-                        inputReceiveNumber.setText(it.receiveNumber)
-                        inputSendNumber.setText(it.sendNumber)
+                        binding.item = it
+//                        inputTitle.setText(it.title)
+//                        inputReceiveNumber.setText(it.receiveNumber)
+//                        inputSendNumber.setText(it.sendNumber)
                     })
         }
 
@@ -71,11 +75,9 @@ class EditActivity : AppCompatActivity(), TextView.OnEditorActionListener {
                 if(save()) {
                     finish()
                 }
-                return true;
+                return true
             }
-            else -> {
-                return false;
-            }
+            else -> return false
         }
     }
 

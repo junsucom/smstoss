@@ -16,8 +16,8 @@ import com.junsu.smstoss.R
 import com.junsu.smstoss.persistence.Item
 import com.junsu.smstoss.ui.edit.EditActivity
 import com.junsu.smstoss.util.PermissionUtil
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
+import kotlinx.android.synthetic.main.items_activity.*
 import java.util.*
 
 
@@ -28,8 +28,12 @@ class ItemsActivity : AppCompatActivity() {
         private val PERMISSIONS = arrayOf(permission.SEND_SMS, permission.RECEIVE_SMS, permission.READ_PHONE_STATE)
     }
 
-    private val viewModel by lazy {
-        ViewModelProviders.of(this).get(ItemViewModel::class.java)
+    private val viewModel:ItemViewModel by lazy {
+        ViewModelProviders.of(this).get(ItemViewModel::class.java).apply {
+            newItemEvent.observe(this@ItemsActivity, Observer<Void>{
+                startActivity(Intent(applicationContext, EditActivity::class.java))
+            })
+        }
     }
 
     private val adapter by lazy {
@@ -51,16 +55,18 @@ class ItemsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+
+        setContentView(R.layout.items_activity)
         setSupportActionBar(toolbar)
         fabAdd.setOnClickListener {
-            startActivity(Intent(applicationContext, EditActivity::class.java))
+            viewModel.addNewItem()
         }
 
         PermissionUtil.requestPermission(this, PERMISSIONS, PERMISSIONS_REQUEST);
         initList()
         initSwipeToDelete()
     }
+
 
     private fun initList() {
         viewModel.allItems.observe(this, Observer(adapter::setList))

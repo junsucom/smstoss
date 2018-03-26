@@ -1,54 +1,62 @@
-<LinearLayout
-    android:id="@+id/viewEditLayout"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:paddingLeft="20dp"
-    android:paddingRight="20dp"
-    android:paddingTop="60dp"
-    tools:context="com.junsu.smstoss.ui.edit.EditActivity">
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        tools:context="com.junsu.smstoss.ui.edit.EditActivity">
 
+    <data>
+        <variable name="item" type="com.junsu.smstoss.persistence.Item"/>
+    </data>
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/input_layout_title"
+    <LinearLayout
+        android:id="@+id/viewEditLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:paddingTop="60dp">
 
-        <android.support.design.widget.TextInputEditText
-            android:id="@+id/inputTitle"
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/input_layout_title"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/title"
-            android:singleLine="true"/>
-    </android.support.design.widget.TextInputLayout>
+            android:layout_height="wrap_content">
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/input_layout_receive_number"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/inputTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{item.title}"
+                android:hint="@string/title"
+                android:singleLine="true"/>
+        </android.support.design.widget.TextInputLayout>
 
-        <android.support.design.widget.TextInputEditText
-            android:id="@+id/inputReceiveNumber"
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/input_layout_receive_number"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/receive_number"
-            android:singleLine="true"/>
-    </android.support.design.widget.TextInputLayout>
+            android:layout_height="wrap_content">
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/input_layout_send_number"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/inputReceiveNumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{item.receiveNumber}"
+                android:hint="@string/receive_number"
+                android:singleLine="true"/>
+        </android.support.design.widget.TextInputLayout>
 
-        <android.support.design.widget.TextInputEditText
-            android:id="@+id/inputSendNumber"
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/input_layout_send_number"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/send_number"
-            android:singleLine="true"/>
-    </android.support.design.widget.TextInputLayout>
-</LinearLayout>
+            android:layout_height="wrap_content">
 
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/inputSendNumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{item.sendNumber}"
+                android:hint="@string/send_number"
+                android:singleLine="true"/>
+        </android.support.design.widget.TextInputLayout>
+    </LinearLayout>
+</layout>
